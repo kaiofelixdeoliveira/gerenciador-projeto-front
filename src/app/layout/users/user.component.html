@@ -1,0 +1,46 @@
+<div class="container">
+  <!-- Large modal -->
+  <div class="text-right mb-3">
+    <button class="btn btn-primary" (click)="open(content)">{{'New User'| translate}}</button>
+  </div>
+    <ng-template #content let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title">Modal title</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+      </div>
+    </ng-template>
+  
+ <hr>
+
+
+
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Id</th>
+        <th scope="col">Nome</th>
+        <th scope="col">Email</th>
+        <th scope="col">Perfil</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let usuario of users; let i = index">
+        <th scope="row">{{i}}</th>
+        <td>{{usuario.id}}</td>
+        <td>{{usuario.nome}}</td>
+        <td>{{usuario.email}}</td>
+        <td>{{usuario.perfil}}</td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>

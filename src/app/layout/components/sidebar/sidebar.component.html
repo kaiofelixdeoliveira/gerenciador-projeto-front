@@ -60,6 +60,15 @@
             <i class="fa fa-file-o"></i>&nbsp;
             <span>{{ 'Blank Page' | translate }}</span>
         </a>
+        <a [routerLink]="['/projetos']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-folder"></i>&nbsp;
+            <span>{{ 'Projetos' | translate }}</span>
+        </a>
+
+        <a [routerLink]="['/users']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-users"></i>&nbsp;
+            <span>{{ 'Users' | translate }}</span>
+        </a>
         <a href="http://www.strapui.com/" class="list-group-item">
             <i class="fa fa-caret-down"></i>&nbsp;
             <span>{{ 'More Themes' | translate }}</span>
