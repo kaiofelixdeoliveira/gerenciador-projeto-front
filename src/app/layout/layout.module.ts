@@ -10,6 +10,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { ProjetosComponent } from './projetos/projetos.component';
 import { UserComponent } from './users/user.component';
 
+
 @NgModule({
     imports: [
         CommonModule,

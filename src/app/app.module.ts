@@ -11,10 +11,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
 import { MDBBootstrapModule, DropdownModule } from 'angular-bootstrap-md';
-import {ModalDirective} from 'angular-bootstrap-md';
+import {ModalDirective,WavesModule, ButtonsModule} from 'angular-bootstrap-md';
 
 @NgModule({
     imports: [
+        WavesModule,
+        ButtonsModule,
         CommonModule,
         BrowserModule,
         BrowserAnimationsModule,

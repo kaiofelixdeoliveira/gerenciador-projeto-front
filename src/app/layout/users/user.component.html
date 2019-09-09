@@ -1,46 +1,48 @@
-<div class="container">
-  <!-- Large modal -->
-  <div class="text-right mb-3">
-    <button class="btn btn-primary" (click)="open(content)">{{'New User'| translate}}</button>
+<!-- Editable table -->
+<div class="card">
+  <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Gerenciamento de Usuarios</h3>
+  <div class="card-body">
+    <div id="table" class="table-editable">
+      <span class="table-add float-right mb-3 mr-2">
+        <a class="text-success" (click)="add()">
+          <mdb-icon fas icon="plus" size="2x"></mdb-icon>
+        </a>
+      </span>
+      <table class="table table-hover table-fixed text-center">
+        <thead class="thead-dark">
+          <tr>
+
+            <th class="text-center">Id</th>
+            <th class="text-center">Nome</th>
+            <th class="text-center">Email</th>
+            <th class="text-center">Perfil</th>
+
+          </tr>
+        </thead>
+        <tr *ngFor="let person of personList; let id = index">
+
+          <td>
+            <span (keyup)="changeValue(id, 'id', $event)" (blur)="updateList(id, 'id', $event)"
+              contenteditable="true">{{person.id}}</span>
+          </td>
+          <td>
+            <span contenteditable="true" (keyup)="changeValue(id, 'nome', $event)"
+              (blur)="updateList(id, 'nome', $event)">{{person.nome}}</span>
+          </td>
+          <td>
+            <span contenteditable="true" (keyup)="changeValue(id, 'email', $event)"
+              (blur)="updateList(id, 'email', $event)">{{person.email}}</span>
+          </td>
+          <td>
+            <span contenteditable="true" (keyup)="changeValue(id, 'perfil', $event)"
+              (blur)="updateList(id, 'perfil', $event)">{{person.perfil}}</span>
+          </td>
+
+
+
+        </tr>
+      </table>
+    </div>
   </div>
-    <ng-template #content let-c="close" let-d="dismiss">
-      <div class="modal-header">
-        <h4 class="modal-title">Modal title</h4>
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>One fine body&hellip;</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
-      </div>
-    </ng-template>
-  
- <hr>
-
-
-
-  <table class="table">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Id</th>
-        <th scope="col">Nome</th>
-        <th scope="col">Email</th>
-        <th scope="col">Perfil</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let usuario of users; let i = index">
-        <th scope="row">{{i}}</th>
-        <td>{{usuario.id}}</td>
-        <td>{{usuario.nome}}</td>
-        <td>{{usuario.email}}</td>
-        <td>{{usuario.perfil}}</td>
-      </tr>
-
-    </tbody>
-  </table>
 </div>
+<!-- Editable table -->

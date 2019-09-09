@@ -15,16 +15,18 @@ export class UserComponent implements OnInit {
 
   closeResult: string;
   users: User[];
-  
+  personList: Array<User>=[];
+  editField: string;
   
   constructor(private userService: UserService,private modalService: NgbModal) { }
 
   ngOnInit() {
 
     this.userService.getAll().pipe(first()).subscribe(users => {
-      this.users = users;
+      this.personList=users;
     });
 
+    
   }
 
   open(content) {
@@ -44,5 +46,33 @@ private getDismissReason(reason: any): string {
         return  `with: ${reason}`;
     }
 }
+
+    
+
+    awaitingPersonList: Array<User> = [
+      { id: '', senha:'',nome: '', email: '', perfil: ''}
+    ];
+
+    updateList(id: number, property: string, event: any) {
+      const editField = event.target.textContent;
+      this.personList[id][property] = editField;
+    }
+
+    remove(id: any) {
+      this.awaitingPersonList.push(this.personList[id]);
+      this.personList.splice(id, 1);
+    }
+
+    add() {
+      if (this.awaitingPersonList.length > 0) {
+        const person = this.awaitingPersonList[0];
+        this.personList.push(person);
+        
+      }
+    }
+
+    changeValue(id: number, property: string, event: any) {
+      this.editField = event.target.textContent;
+    }
 
 }
