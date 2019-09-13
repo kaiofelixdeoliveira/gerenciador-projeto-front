@@ -1,46 +1,99 @@
-<!-- Editable table -->
+<button class="btn btn-primary "type="button" mdbBtn rounded="true" data-toggle="modal" data-target="#basicExample"
+  (click)="frame.show()" mdbWavesEffect>New User
+</button>
+
+<div mdbModal #frame="mdbModal" class="modal fade center" id="frameModalTop" tabindex="-1" role="dialog"
+  aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Cadastrar</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+
+        <div class="row">
+          <div class="col-sm-0">
+            <mdb-icon fas icon="user fa-lg" class="prefix "></mdb-icon>
+          </div>
+          <div class="col-sm">
+            <input type="text" id="orangeForm-name" class="form-control" [formControl]="signupFormModalName" mdbInput
+              mdbValidate placeholder="Your name">
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-sm-0">
+            <mdb-icon fas icon="envelope fa-lg" class="prefix "></mdb-icon>
+          </div>
+          <div class="col-sm">
+            <input type="email" id="orangeForm-email" class="form-control" [formControl]="signupFormModalEmail" mdbInput
+              mdbValidate placeholder="Your email">
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-sm-0">
+            <mdb-icon fas icon="lock fa-lg" class="prefix"></mdb-icon>
+          </div>
+          <div class="col-sm">
+            <input type="password" id="orangeForm-pass" class="form-control" [formControl]="signupFormModalPassword"
+              mdbInput mdbValidate placeholder="Your password">
+          </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-sm-0">
+              <mdb-icon fas icon="group" class="prefix"></mdb-icon>
+            </div>
+            <div class="col-sm">
+                <div class="form-group">
+                    <select class="form-control">
+                        <option>ROLE_ADMIN</option>
+                        <option>ROLE_USUARIO</option>
+                    </select>
+                </div>
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+          <button class="btn btn-primary" type="button">Cadastrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- List table -->
 <div class="card">
   <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Gerenciamento de Usuarios</h3>
   <div class="card-body">
     <div id="table" class="table-editable">
-      <span class="table-add float-right mb-3 mr-2">
-        <a class="text-success" (click)="add()">
-          <mdb-icon fas icon="plus" size="2x"></mdb-icon>
-        </a>
-      </span>
       <table class="table table-hover table-fixed text-center">
         <thead class="thead-dark">
           <tr>
-
             <th class="text-center">Id</th>
             <th class="text-center">Nome</th>
             <th class="text-center">Email</th>
             <th class="text-center">Perfil</th>
-
           </tr>
         </thead>
-        <tr *ngFor="let person of personList; let id = index">
-
-          <td>
-            <span (keyup)="changeValue(id, 'id', $event)" (blur)="updateList(id, 'id', $event)"
-              contenteditable="true">{{person.id}}</span>
-          </td>
-          <td>
-            <span contenteditable="true" (keyup)="changeValue(id, 'nome', $event)"
-              (blur)="updateList(id, 'nome', $event)">{{person.nome}}</span>
-          </td>
-          <td>
-            <span contenteditable="true" (keyup)="changeValue(id, 'email', $event)"
-              (blur)="updateList(id, 'email', $event)">{{person.email}}</span>
-          </td>
-          <td>
-            <span contenteditable="true" (keyup)="changeValue(id, 'perfil', $event)"
-              (blur)="updateList(id, 'perfil', $event)">{{person.perfil}}</span>
-          </td>
-
-
-
-        </tr>
+        <tbody>
+          <tr *ngFor="let user of users; let id = index">
+            <td>
+              <span>{{user.id}}</span>
+            </td>
+            <td>
+              <span>{{user.nome}}</span>
+            </td>
+            <td>
+              <span>{{user.email}}</span>
+            </td>
+            <td>
+              <span>{{user.perfil}}</span>
+            </td>
+          </tr>
+        </tbody>
       </table>
     </div>
   </div>

@@ -3,7 +3,7 @@ import { UserService } from './user.service';
 import { User } from '../../models/user.model';
 import { first } from 'rxjs/operators';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 
 @Component({
@@ -13,66 +13,34 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 })
 export class UserComponent implements OnInit {
 
-  closeResult: string;
   users: User[];
-  personList: Array<User>=[];
-  editField: string;
-  
+  validatingForm: FormGroup;
+
   constructor(private userService: UserService,private modalService: NgbModal) { }
 
   ngOnInit() {
 
     this.userService.getAll().pipe(first()).subscribe(users => {
-      this.personList=users;
+      this.users=users;
     });
 
-    
+    this.validatingForm = new FormGroup({
+      signupFormModalName: new FormControl('', Validators.required),
+      signupFormModalEmail: new FormControl('', Validators.email),
+      signupFormModalPassword: new FormControl('', Validators.required),
+    });
   }
 
-  open(content) {
-    this.modalService.open(content).result.then((result) => {
-        this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-}
+  get signupFormModalName() {
+    return this.validatingForm.get('signupFormModalName');
+  }
 
-private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-        return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-        return 'by clicking on a backdrop';
-    } else {
-        return  `with: ${reason}`;
-    }
-}
+  get signupFormModalEmail() {
+    return this.validatingForm.get('signupFormModalEmail');
+  }
 
-    
-
-    awaitingPersonList: Array<User> = [
-      { id: '', senha:'',nome: '', email: '', perfil: ''}
-    ];
-
-    updateList(id: number, property: string, event: any) {
-      const editField = event.target.textContent;
-      this.personList[id][property] = editField;
-    }
-
-    remove(id: any) {
-      this.awaitingPersonList.push(this.personList[id]);
-      this.personList.splice(id, 1);
-    }
-
-    add() {
-      if (this.awaitingPersonList.length > 0) {
-        const person = this.awaitingPersonList[0];
-        this.personList.push(person);
-        
-      }
-    }
-
-    changeValue(id: number, property: string, event: any) {
-      this.editField = event.target.textContent;
-    }
+  get signupFormModalPassword() {
+    return this.validatingForm.get('signupFormModalPassword');
+  }
 
 }
