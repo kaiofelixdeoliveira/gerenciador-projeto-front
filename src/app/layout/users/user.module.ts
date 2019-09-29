@@ -4,9 +4,10 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UserRoutingModule } from './user-routing.module';
 import { UserComponent } from './user.component';
 import { PageHeaderModule } from '../../shared';
-import { MDBBootstrapModule, DropdownModule } from 'angular-bootstrap-md';
+import { MDBBootstrapModule, DropdownModule,ModalModule } from 'angular-bootstrap-md';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 
 
@@ -20,7 +21,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         ReactiveFormsModule,
         FormsModule,
         TranslateModule,
-        NgbModule
+        NgbModule,
+        ModalModule
+      
     
     ],
     declarations: [UserComponent]

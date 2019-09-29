@@ -10,8 +10,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
-import { MDBBootstrapModule, DropdownModule } from 'angular-bootstrap-md';
-import {ModalDirective,WavesModule, ButtonsModule} from 'angular-bootstrap-md';
+import { MDBBootstrapModule, DropdownModule,WavesModule, ButtonsModule} from 'angular-bootstrap-md';
 
 @NgModule({
     imports: [
@@ -25,6 +24,7 @@ import {ModalDirective,WavesModule, ButtonsModule} from 'angular-bootstrap-md';
         AppRoutingModule,
         MDBBootstrapModule.forRoot(),
         DropdownModule.forRoot(),
+        
         
     ],
     declarations: [AppComponent],

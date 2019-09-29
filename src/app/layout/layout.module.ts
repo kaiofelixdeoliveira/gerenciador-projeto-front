@@ -11,12 +11,14 @@ import { ProjetosComponent } from './projetos/projetos.component';
 import { UserComponent } from './users/user.component';
 
 
+
 @NgModule({
     imports: [
         CommonModule,
         LayoutRoutingModule,
         TranslateModule,
-        NgbDropdownModule
+        NgbDropdownModule,
+
     ],
     declarations: [LayoutComponent, SidebarComponent, HeaderComponent]
 })

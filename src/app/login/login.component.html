@@ -11,20 +11,18 @@
 
                     <!-- User -->
                     <div class="md-form">
-                       
                         <input type="text" id="loginFormUser" formControlName="username" class="form-control"
-                            [ngClass]="{ 'is-invalid': submitted && f.username.errors }" placeholder="Name"/>
+                            [ngClass]="{ 'is-invalid': submitted && f.username.errors }" placeholder="Name" />
                         <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
                             <div *ngIf="f.username.errors.required">{{'Username is required'| translate }}</div>
                         </div>
-
                     </div>
-                <br>
+                    <br>
                     <!-- Password -->
                     <div class="md-form">
-            
+
                         <input type="password" id="loginFormPassword" formControlName="password" class="form-control"
-                            [ngClass]="{ 'is-invalid': submitted && f.password.errors }" placeholder="Password"/>
+                            [ngClass]="{ 'is-invalid': submitted && f.password.errors }" placeholder="Password" />
                         <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                             <div *ngIf="f.password.errors.required">{{'Password is required'| translate }}</div>
                         </div>
@@ -39,8 +37,7 @@
                             {{ 'Log in' | translate }}
                         </button>
                         <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
-                        <hr class="hr-light mb-3 mt-4">
-
+                
                     </div>
                 </form>
                 <!--Card content-->

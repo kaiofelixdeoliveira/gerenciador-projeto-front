@@ -1,6 +1,7 @@
-<button class="btn btn-primary "type="button" mdbBtn rounded="true" data-toggle="modal" data-target="#basicExample"
+<button class="btn btn-primary " type="button" mdbBtn rounded="true" data-toggle="modal" data-target="#basicExample"
   (click)="frame.show()" mdbWavesEffect>New User
 </button>
+
 
 <div mdbModal #frame="mdbModal" class="modal fade center" id="frameModalTop" tabindex="-1" role="dialog"
   aria-labelledby="myModalLabel" aria-hidden="true">
@@ -13,53 +14,81 @@
         </button>
       </div>
       <div class="modal-body mx-3">
-
-        <div class="row">
-          <div class="col-sm-0">
-            <mdb-icon fas icon="user fa-lg" class="prefix "></mdb-icon>
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col-sm-0">
+              <mdb-icon fas icon="user fa-lg" class="prefix "></mdb-icon>
+            </div>
+            <div class="col-sm">
+              <!-- User -->
+              <input type="text" id="registerFormUser" formControlName="username" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.username.errors }" placeholder="Name" />
+              <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                <div *ngIf="f.username.errors.required">{{'Username is required'| translate }}</div>
+              </div>
+            </div>
           </div>
-          <div class="col-sm">
-            <input type="text" id="orangeForm-name" class="form-control" [formControl]="signupFormModalName" mdbInput
-              mdbValidate placeholder="Your name">
+          <br>
+          <div class="row">
+            <div class="col-sm-0">
+              <mdb-icon fas icon="envelope fa-lg" class="prefix "></mdb-icon>
+            </div>
+            <div class="col-sm">
+              <div class="md-form">
+                <!-- Email -->
+                <input type="email" id="registerFormEmail" formControlName="email" class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f.email.errors }" placeholder="Email" />
+                <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                  <div *ngIf="f.email.errors.required">{{'Email is required'| translate }}</div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <br>
-        <div class="row">
-          <div class="col-sm-0">
-            <mdb-icon fas icon="envelope fa-lg" class="prefix "></mdb-icon>
+          <br>
+          <div class="row">
+            <div class="col-sm-0">
+              <mdb-icon fas icon="lock fa-lg" class="prefix"></mdb-icon>
+            </div>
+            <div class="col-sm">
+              <div class="md-form">
+                <!-- Password -->
+                <input type="password" id="registerFormPassword" formControlName="password" class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f.password.errors }" placeholder="Password" />
+                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                  <div *ngIf="f.password.errors.required">{{'Password is required'| translate }}</div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="col-sm">
-            <input type="email" id="orangeForm-email" class="form-control" [formControl]="signupFormModalEmail" mdbInput
-              mdbValidate placeholder="Your email">
-          </div>
-        </div>
-        <br>
-        <div class="row">
-          <div class="col-sm-0">
-            <mdb-icon fas icon="lock fa-lg" class="prefix"></mdb-icon>
-          </div>
-          <div class="col-sm">
-            <input type="password" id="orangeForm-pass" class="form-control" [formControl]="signupFormModalPassword"
-              mdbInput mdbValidate placeholder="Your password">
-          </div>
-        </div>
-        <br>
-        <div class="row">
+          <br>
+          <div class="row">
             <div class="col-sm-0">
               <mdb-icon fas icon="group" class="prefix"></mdb-icon>
             </div>
             <div class="col-sm">
-                <div class="form-group">
-                    <select class="form-control">
-                        <option>ROLE_ADMIN</option>
-                        <option>ROLE_USUARIO</option>
-                    </select>
+              <!-- Role -->
+              <div class="form-group">
+                <select class="form-control" id="registerFormRole" formControlName="role"
+                  [ngClass]="{ 'is-invalid': submitted && f.role.errors }">
+                  <option value="" disabled selected hidden>Selecione o perfil</option>
+                  <option>ROLE_ADMIN</option>
+                  <option>ROLE_USUARIO</option>
+                </select>
+                <div *ngIf="submitted && f.role.errors" class="invalid-feedback">
+                  <div *ngIf="f.role.errors.required">{{'Role is required'| translate }}</div>
                 </div>
+              </div>
             </div>
           </div>
-      </div>
-      <div class="modal-footer d-flex justify-content-center">
-          <button class="btn btn-primary" type="button">Cadastrar</button>
+          <div class="modal-footer d-flex justify-content-center">
+
+            <button [disabled]="loading" mdbBtn color="info" mdbWavesEffect>
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+              {{ 'Cadastrar' | translate }}
+            </button>
+            <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -69,7 +98,7 @@
   <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Gerenciamento de Usuarios</h3>
   <div class="card-body">
     <div id="table" class="table-editable">
-      <table class="table table-hover table-fixed text-center">
+      <table class="material colored-header sm table table-striped table-hover text-center">
         <thead class="thead-dark">
           <tr>
             <th class="text-center">Id</th>

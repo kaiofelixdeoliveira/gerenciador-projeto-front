@@ -2,7 +2,7 @@ import { Gestor } from './gestor.model';
 
 export class User {
     // Note: Using only optional constructor properties without backing store disables typescript's type checking for the type
-    constructor(id?: string, nome?: string, email?: string, senha?: string, perfil?: string) {
+    constructor(id?: number, nome?: string, email?: string, senha?: string, perfil?: string) {
 
         this.id = id;
         this.nome = nome;
@@ -12,7 +12,7 @@ export class User {
 
     }
 
-    public id: string;
+    public id: number;
     public nome: string;
     public email: string;
     public senha: string;

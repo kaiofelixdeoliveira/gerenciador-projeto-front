@@ -1,46 +1,83 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserService } from './user.service';
 import { User } from '../../models/user.model';
 import { first } from 'rxjs/operators';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {ModalDirective} from 'angular-bootstrap-md';
+
 
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
-  styleUrls: ['./user.component.scss']
+  styleUrls: ['./user.component.scss'],
+ 
 })
 export class UserComponent implements OnInit {
 
   users: User[];
-  validatingForm: FormGroup;
+  newUser: User = new User;
+  registerForm: FormGroup;
+  loading = false;
+  submitted = false;
+  error = '';
+  @ViewChild('frame', { static: true }) frame: ModalDirective;
 
-  constructor(private userService: UserService,private modalService: NgbModal) { }
+  constructor(
+    private userService: UserService,
+    private formBuilder: FormBuilder
+  ) { }
 
   ngOnInit() {
 
-    this.userService.getAll().pipe(first()).subscribe(users => {
-      this.users=users;
+    
+    this.getAllUsers();
+
+    this.validFormModal();
+
+  }
+
+  validFormModal(){
+
+    this.registerForm = this.formBuilder.group({
+      username: ['', Validators.required],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+      role: ['', Validators.required]
     });
-
-    this.validatingForm = new FormGroup({
-      signupFormModalName: new FormControl('', Validators.required),
-      signupFormModalEmail: new FormControl('', Validators.email),
-      signupFormModalPassword: new FormControl('', Validators.required),
-    });
+  }
+  getAllUsers(){
+    this.userService.getAllUsers().pipe(first()).subscribe(users => {
+    this.users = users;
+  });
+}
+  get f() {
+    return this.registerForm.controls;
   }
 
-  get signupFormModalName() {
-    return this.validatingForm.get('signupFormModalName');
+
+  onSubmit() {
+    this.submitted = true;
+
+    if (this.registerForm.invalid) {
+      return;
+    }
+
+    this.newUser.email = this.f.email.value;
+    this.newUser.nome = this.f.username.value;
+    this.newUser.senha = this.f.password.value;
+    this.newUser.perfil = this.f.role.value;
+
+    this.loading = true;
+    this.userService.registerNewUser(this.newUser).pipe(first()).subscribe(
+
+    );
+
+    this.frame.hide();
+
+    this.getAllUsers();
+
   }
 
-  get signupFormModalEmail() {
-    return this.validatingForm.get('signupFormModalEmail');
-  }
-
-  get signupFormModalPassword() {
-    return this.validatingForm.get('signupFormModalPassword');
-  }
 
 }
