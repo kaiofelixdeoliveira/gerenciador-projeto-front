@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import {MDBModalRef} from "angular-bootstrap-md";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Subject} from "rxjs";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ProjetosService } from './projetos.service';
+import { Projeto } from '../../models/projeto.model';
+import { first } from 'rxjs/operators';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {ModalDirective} from 'angular-bootstrap-md'
 
 @Component({
   selector: 'app-projetos-modal',
@@ -10,35 +12,60 @@ import {Subject} from "rxjs";
 })
 export class ProjetosModalComponent {
 
- 
-  public editableRow: { id: string, first: string, last: string, handle: string };
-  //public saveButtonClicked: Subject&lt;any&gt; = new Subject&lt;any&gt;();
+  projeto:Projeto=new Projeto;
+  registerForm: FormGroup;
+  loading = false;
+  submitted = false;
+  error = '';
 
-  public form: FormGroup = new FormGroup({
-      id: new FormControl({value: '', disabled: true}),
-      first: new FormControl('', Validators.required),
-      last: new FormControl('', Validators.required),
-      handle: new FormControl('', Validators.required)
-    });
+  @ViewChild('frame', { static: true }) frame: ModalDirective;
 
-    constructor(public modalRef: MDBModalRef) { }
 
+
+    constructor(private formBuilder: FormBuilder, private projetosService: ProjetosService,) { }
+    
     ngOnInit() {
-      this.form.controls['id'].patchValue(this.editableRow.id);
-      this.form.controls['first'].patchValue(this.editableRow.first);
-      this.form.controls['last'].patchValue(this.editableRow.last);
-      this.form.controls['handle'].patchValue(this.editableRow.handle);
+  
+      this.validFormModal();
+  
     }
-
-    editRow() {
-      this.editableRow = this.form.getRawValue();
-      //this.saveButtonClicked.next(this.editableRow);
-      this.modalRef.hide();
+  
+    validFormModal(){
+  
+      this.registerForm = this.formBuilder.group({
+        codigo: ['', Validators.required],
+        proposta: ['', Validators.required],
+        descricao: ['', Validators.required],
+        quantidadeHoras: ['', Validators.required]
+      });
     }
+    addProjeto(projeto:Projeto){
+      this.projetosService.addNewProjeto(projeto).pipe(first()).subscribe();
+  }
+    get f() {
+      return this.registerForm.controls;
+    }
+  
+  
+    onSubmit() {
+      this.submitted = true;
+  
+      if (this.registerForm.invalid) {
+        return;
+      }
+  
+      this.projeto.codigo = this.f.codigo.value;
+      this.projeto.proposta = this.f.proposta.value;
+      this.projeto.descricao = this.f.descricao.value;
+      this.projeto.quantidadeHoras = this.f.quantidadeHoras.value;
+  
+      this.loading = true;
+      this.addProjeto(this.projeto);
+  
+      this.frame.hide();
 
-    get first() { return this.form.get('first'); }
-
-    get last() { return this.form.get('last'); }
-
-    get handle() { return this.form.get('handle'); }
+  
+    }
+  
+  
   }

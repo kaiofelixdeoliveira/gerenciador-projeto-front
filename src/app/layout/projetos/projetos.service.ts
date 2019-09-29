@@ -26,7 +26,7 @@ export class ProjetosService {
   }
 
   // POST
-  registerNewpROJETO(data): Observable<Projeto> {
+  addNewProjeto(data): Observable<Projeto> {
     return this.http.post<Projeto>(`${environment.apiUrl}${this.endpointUrl}`, JSON.stringify(data), this.factoryEndpointService.httpOptions)
       .pipe(
         retry(1),

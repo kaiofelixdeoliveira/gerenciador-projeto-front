@@ -1,42 +1,112 @@
-<div class="modal-content">
-    <div class="modal-header">
-      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-        <span aria-hidden="true">×</span>
-      </button>
-      <h4 class="modal-title w-100" id="myModalLabel">Edit user: {{editableRow.first}}</h4>
-    </div>
-    <div class="modal-body">
-      <form [formGroup]="form">
-        <div class="md-form">
-          <input id="id" type="text" class="form-control grey-text" formControlName="id" mdbInput>
-          <label for="id">ID</label>
-        </div>
-        <div class="md-form">
-          <input id="first" type="text" class="form-control" formControlName="first" mdbInput mdbValidate
-                 [validateSuccess]="false">
-          <label for="first">First</label>
-          <mdb-error *ngIf="first.invalid && (first.dirty || first.touched)">Input is required</mdb-error>
-        </div>
-        <div class="md-form">
-          <input id="last" type="text" class="form-control" formControlName="last" mdbInput mdbValidate
-                 [validateSuccess]="false">
-          <label for="last">Last</label>
-          <mdb-error *ngIf="last.invalid && (last.dirty || last.touched)">Input is required</mdb-error>
-        </div>
-        <div class="md-form">
-          <input id="handle" type="text" class="form-control" formControlName="handle" mdbInput mdbValidate
-                 [validateSuccess]="false">
-          <label for="handle">Handle</label>
-          <mdb-error *ngIf="handle.invalid && (handle.dirty || handle.touched)">Input is required</mdb-error>
-        </div>
-      </form>
-    </div>
-    <div class="modal-footer">
-      <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
-              (click)="modalRef.hide()" mdbWavesEffect>Close
-      </button>
-      <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
-              [disabled]="form.invalid" (click)="editRow()">Save!
-      </button>
+
+<a class="text-success" (click)="frame.show()">
+    <mdb-icon fas icon="plus" size="2x"></mdb-icon>
+  </a>
+
+<div mdbModal #frame="mdbModal" class="modal fade center" id="frameModalTop" tabindex="-1" role="dialog"
+  aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Cadastrar</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col-sm-0">
+              <mdb-icon fas icon="user fa-lg" class="prefix "></mdb-icon>
+            </div>
+            <div class="col-sm">
+              <!-- Codigo -->
+              <input type="text" id="registerFormCodigo" formControlName="codigo" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.codigo.errors }" placeholder="Codigo" />
+              <div *ngIf="submitted && f.codigo.errors" class="invalid-feedback">
+                <div *ngIf="f.codigo.errors.required">{{'Codigo is required'| translate }}</div>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-sm-0">
+              <mdb-icon fas icon="envelope fa-lg" class="prefix "></mdb-icon>
+            </div>
+            <div class="col-sm">
+              <div class="md-form">
+                <!-- Proposta -->
+                <input type="text" id="registerFormProposta" formControlName="proposta" class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f.proposta.errors }" placeholder="Proposta" />
+                <div *ngIf="submitted && f.proposta.errors" class="invalid-feedback">
+                  <div *ngIf="f.proposta.errors.required">{{'Proposta is required'| translate }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-sm-0">
+              <mdb-icon fas icon="lock fa-lg" class="prefix"></mdb-icon>
+            </div>
+            <div class="col-sm">
+              <div class="md-form">
+                <!-- descricao -->
+                <input type="text" id="registerFormDescricao" formControlName="descricao" class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f.descricao.errors }" placeholder="Descricao" />
+                <div *ngIf="submitted && f.descricao.errors" class="invalid-feedback">
+                  <div *ngIf="f.descricao.errors.required">{{'Descricao is required'| translate }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+              <div class="col-sm-0">
+                <mdb-icon fas icon="lock fa-lg" class="prefix"></mdb-icon>
+              </div>
+              <div class="col-sm">
+                <div class="md-form">
+                  <!-- quantidade de Horas -->
+                  <input type="text" id="registerFormQuantidadeHoras" formControlName="quantidadeHoras" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.quantidadeHoras.errors }" placeholder="Quantidade de Horas" />
+                  <div *ngIf="submitted && f.quantidadeHoras.errors" class="invalid-feedback">
+                    <div *ngIf="f.quantidadeHoras.errors.required">{{'Quantidade de Horas is required'| translate }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <br>
+          <div class="row">
+            <div class="col-sm-0">
+              <mdb-icon fas icon="group" class="prefix"></mdb-icon>
+            </div>
+            <div class="col-sm">
+              <!-- role 
+              <div class="form-group">
+                <select class="form-control" id="registerFormRole" formControlName="role"
+                  [ngClass]="{ 'is-invalid': submitted && f.role.errors }">
+                  <option value="" disabled selected hidden>Selecione o perfil</option>
+                  <option>ROLE_ADMIN</option>
+                  <option>ROLE_USUARIO</option>
+                </select>
+                <div *ngIf="submitted && f.role.errors" class="invalid-feedback">
+                  <div *ngIf="f.role.errors.required">{{'Role is required'| translate }}</div>
+                </div>
+              </div>
+              -->
+            </div>
+          </div>
+          <div class="modal-footer d-flex justify-content-center">
+
+            <button [disabled]="loading" mdbBtn color="info" mdbWavesEffect>
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+              {{ 'Cadastrar' | translate }}
+            </button>
+            <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
+</div>

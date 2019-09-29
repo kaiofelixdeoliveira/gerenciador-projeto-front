@@ -1,3 +1,5 @@
+
+
 <!-- Editable table -->
 <div class="card">
   <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Projetos</h3>
@@ -12,45 +14,44 @@
           </div>
           <div class="col-md-1 ml-auto">
             <span>
-              <a class="text-success" (click)="add()">
-                <mdb-icon fas icon="plus" size="2x"></mdb-icon>
-              </a>
+                <app-projetos-modal></app-projetos-modal>
             </span>
           </div>
         </div>
       </div>
+      <br>
       <table mdbTable id="tableProjetos" #table="mdbTable" class="z-depth-1 text-center">
 
         <thead class="thead-dark">
           <tr>
             <th *ngFor="let head of headElements; let i = index" aria-controls="tableProjetos" scope="col"
-              [mdbTableSort]="personList" [sortBy]="headElements[i]">{{head | titlecase}}
+              [mdbTableSort]="listaProjetos" [sortBy]="headElements[i]">{{head | titlecase}}
               <mdb-icon fas icon="sort"></mdb-icon>
             </th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let person of personList; let id = index">
+          <tr *ngFor="let projeto of listaProjetos; let id = index">
 
             <td *ngIf="id+1 >= mdbTablePagination.firstItemIndex && id < mdbTablePagination.lastItemIndex" scope="row">
-              <span (keyup)="changeValue(id, 'name', $event)" (blur)="updateList(id, 'name', $event)"
-                contenteditable="true">{{person.name}}</span>
+              <span (keyup)="changeValue(id, 'codigo', $event)" (blur)="updateList(id, 'codigo', $event)"
+                contenteditable="true">{{projeto.codigo}}</span>
             </td>
             <td *ngIf="id+1 >= mdbTablePagination.firstItemIndex && id < mdbTablePagination.lastItemIndex">
-              <span contenteditable="true" (keyup)="changeValue(id, 'age', $event)"
-                (blur)="updateList(id, 'age', $event)">{{person.age}}</span>
+              <span contenteditable="true" (keyup)="changeValue(id, 'proposta', $event)"
+                (blur)="updateList(id, 'proposta', $event)">{{projeto.proposta}}</span>
             </td>
             <td *ngIf="id+1 >= mdbTablePagination.firstItemIndex && id < mdbTablePagination.lastItemIndex">
-              <span contenteditable="true" (keyup)="changeValue(id, 'companyName', $event)"
-                (blur)="updateList(id, 'companyName', $event)">{{person.companyName}}</span>
+              <span contenteditable="true" (keyup)="changeValue(id, 'descricao', $event)"
+                (blur)="updateList(id, 'descricao', $event)">{{projeto.descricao}}</span>
             </td>
             <td *ngIf="id+1 >= mdbTablePagination.firstItemIndex && id < mdbTablePagination.lastItemIndex">
-              <span contenteditable="true" (keyup)="changeValue(id, 'country', $event)"
-                (blur)="updateList(id, 'country', $event)">{{person.country}}</span>
+              <span contenteditable="true" (keyup)="changeValue(id, 'quantidadeHoras', $event)"
+                (blur)="updateList(id, 'quantidadeHoras', $event)">{{projeto.quantidadeHoras}}</span>
             </td>
             <td *ngIf="id+1 >= mdbTablePagination.firstItemIndex && id < mdbTablePagination.lastItemIndex">
-              <span contenteditable="true" (keyup)="changeValue(id, 'city', $event)"
-                (blur)="updateList(id, 'city', $event)">{{person.city}}</span>
+              <span contenteditable="true" (keyup)="changeValue(id, 'dataContratacao', $event)"
+                (blur)="updateList(id, 'dataContratacao', $event)">{{projeto.dataContratacao}}</span>
             </td>
 
             <td *ngIf="id+1 >= mdbTablePagination.firstItemIndex && id < mdbTablePagination.lastItemIndex">
@@ -64,7 +65,7 @@
         <tfoot class="grey lighten-5 w-100">
           <tr>
             <td colspan="6">
-              <mdb-table-pagination [tableEl]="table" [searchDataSource]="personList"></mdb-table-pagination>
+              <mdb-table-pagination [tableEl]="table" [searchDataSource]="listaProjetos"></mdb-table-pagination>
             </td>
           </tr>
         </tfoot>

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { TranslateModule } from '@ngx-translate/core';
 import { ProjetosRoutingModule } from './projetos-routing.module';
 import { ProjetosComponent } from './projetos.component';
 import { PageHeaderModule } from '../../shared';
@@ -18,7 +18,8 @@ import { ProjetosModalComponent } from './projetos-modal.component';
         ReactiveFormsModule,
         FormsModule,
         WavesModule,
-        MDBBootstrapModule
+        MDBBootstrapModule,
+        TranslateModule
     ],
     declarations: [ProjetosComponent, ProjetosModalComponent],
     
