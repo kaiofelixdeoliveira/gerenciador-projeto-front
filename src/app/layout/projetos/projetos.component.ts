@@ -2,8 +2,12 @@
 import { Component, OnInit, ViewChild, HostListener, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstrap-md';
 import { ProjetosService } from './projetos.service';
+import { GestoresService } from './../gestores/gestores.service';
 import { Projeto } from '../../models/projeto.model';
+import { Gestor } from '../../models/gestor.model';
 import { first } from 'rxjs/operators';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ModalDirective } from 'angular-bootstrap-md'
 
 @Component({
   selector: 'app-projetos',
@@ -14,14 +18,23 @@ export class ProjetosComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
-
-  newProjeto:Projeto=new Projeto;
+  @ViewChild('frame', { static: true }) frame: ModalDirective;
+  newProjeto: Projeto = new Projeto;
   projetos: Projeto[] = [];
   editField: string = '';
   previous: any = [];
   searchText: string = '';
   headElements = ['codigo', 'proposta', 'descricao', 'quantidadeHoras', 'dataContratacao', 'Remove'];
   listaProjetos: Projeto[] = [];
+  projeto: Projeto = new Projeto;
+  gestores: Gestor[] = [];
+  registerForm: FormGroup;
+  loading = false;
+  submitted = false;
+  error = '';
+  model: any;
+
+
 
 
 
@@ -47,11 +60,15 @@ export class ProjetosComponent implements OnInit, AfterViewInit {
     this.searchItems();
   }
 
-  constructor(private cdRef: ChangeDetectorRef, private projetosService: ProjetosService) { }
+  constructor(private cdRef: ChangeDetectorRef, private projetosService: ProjetosService,
+    private formBuilder: FormBuilder,
+    private gestoresService: GestoresService) { }
 
   ngOnInit() {
 
+    this.validFormModal();
     this.getAllProjetos();
+    this.getAllGestores();
 
   }
 
@@ -70,11 +87,11 @@ export class ProjetosComponent implements OnInit, AfterViewInit {
     });
   }
 
-  addNewProjeto(){
+  addNewProjeto() {
     this.projetosService.addNewProjeto(this.newProjeto).pipe(first()).subscribe(() => {
-      
+
       this.getAllProjetos();
-    
+
     });
   }
 
@@ -95,11 +112,11 @@ export class ProjetosComponent implements OnInit, AfterViewInit {
   }
 
   add() {
-   /* if (this.awaitinglistaProjetos.length > 0) {
-      const person = this.awaitinglistaProjetos[0];
-      this.listaProjetos.push(person);
-      this.awaitinglistaProjetos.splice(0, 1);
-    }*/
+    /* if (this.awaitinglistaProjetos.length > 0) {
+       const person = this.awaitinglistaProjetos[0];
+       this.listaProjetos.push(person);
+       this.awaitinglistaProjetos.splice(0, 1);
+     }*/
   }
 
   changeValue(id: number, property: string, event: any) {
@@ -120,6 +137,63 @@ export class ProjetosComponent implements OnInit, AfterViewInit {
     }
   }
 
+  //modal methods
+  validFormModal() {
+
+    this.registerForm = this.formBuilder.group({
+      codigo: ['', Validators.required],
+      proposta: ['', Validators.required],
+      descricao: ['', Validators.required],
+      quantidadeHoras: ['', Validators.required],
+      gestor: ['', Validators.required]
+    });
+  }
+  addProjeto(projeto: Projeto) {
+    this.projetosService.addNewProjeto(projeto).pipe(first()).subscribe(() => {
+
+      this.getAllProjetos();
+
+    });
+
+  }
+
+  getAllGestores() {
+    this.gestoresService.getAllGestores().pipe(first()).subscribe((gestores: Gestor[]) => {
+      this.gestores = gestores;
+    });
+  }
+
+  get f() {
+    return this.registerForm.controls;
+  }
+
+
+  onSubmit() {
+    this.submitted = true;
+
+    if (this.registerForm.invalid) {
+      return;
+    }
+
+
+    let gestor: Gestor = new Gestor();
+    gestor.id = String(this.f.gestor.value);
+
+    this.projeto.codigo = this.f.codigo.value;
+    this.projeto.proposta = this.f.proposta.value;
+    this.projeto.descricao = this.f.descricao.value;
+    this.projeto.quantidadeHoras = this.f.quantidadeHoras.value;
+    this.projeto.gestor = gestor;
+
+    this.loading = true;
+    this.addProjeto(this.projeto);
+    this.registerForm.reset();
+
+    this.submitted = false;
+    this.loading = false;
+    this.frame.hide();
+
+  }
 
 }
 

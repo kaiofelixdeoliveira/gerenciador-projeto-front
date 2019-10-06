@@ -6,9 +6,9 @@ import { ProjetosComponent } from './projetos.component';
 import { PageHeaderModule } from '../../shared';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MDBBootstrapModule,WavesModule} from 'angular-bootstrap-md';
-import { ProjetosModalComponent } from './projetos-modal.component';
 
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DatePickerComponent } from '../bs-component/components/date-picker/date-picker.component';
 
 @NgModule({
     imports: [
@@ -19,9 +19,10 @@ import { ProjetosModalComponent } from './projetos-modal.component';
         FormsModule,
         WavesModule,
         MDBBootstrapModule,
-        TranslateModule
+        TranslateModule,
+        NgbModule
     ],
-    declarations: [ProjetosComponent, ProjetosModalComponent],
+    declarations: [ProjetosComponent,DatePickerComponent ]
     
 })
 export class ProjetosModule {}

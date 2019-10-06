@@ -1,11 +1,12 @@
 import { Recurso } from "./recurso.model";
 
+
 export class Projeto {
 
 
   constructor(id?: number, codigo?: string, proposta?: string, descricao?: string,
     quantidadeHoras?: number, dataContratacao?: Date, observacao?: string, projectManager?: any,
-    projetoRecursos?: any[], faturamento?: any, gestor?: any, recurso?:any) {
+    projetoRecursos?: any[], faturamento?: any, gestor?:any, recurso?:any) {
 
     this.id = id;
     this.codigo = codigo;

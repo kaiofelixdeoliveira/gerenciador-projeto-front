@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./date-picker.component.scss']
 })
 export class DatePickerComponent implements OnInit {
-    model: any;
+    model: any="";
     constructor() { }
 
     ngOnInit() {

@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
 import { MDBBootstrapModule, DropdownModule,WavesModule, ButtonsModule} from 'angular-bootstrap-md';
 
+
 @NgModule({
     imports: [
         WavesModule,
