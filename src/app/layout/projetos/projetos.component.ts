@@ -106,17 +106,17 @@ export class ProjetosComponent implements OnInit, AfterViewInit {
     this.listaProjetos[id][property] = editField;
   }
 
-  remove(id: any) {
-    /*this.listaProjetos.unshift(this.listaProjetos[id]);
-    this.listaProjetos.splice(id, 1);*/
-  }
+  update(id:any){
 
-  add() {
-    /* if (this.awaitinglistaProjetos.length > 0) {
-       const person = this.awaitinglistaProjetos[0];
-       this.listaProjetos.push(person);
-       this.awaitinglistaProjetos.splice(0, 1);
-     }*/
+    let idProjeto=this.listaProjetos[id].id;
+    let projeto:Projeto=this.listaProjetos[id];
+
+    this.projetosService.updateProjeto(projeto,idProjeto).pipe(first()).subscribe((projeto: Projeto) => {
+    this.listaProjetos[id]=projeto;
+     
+      this.getAllProjetos();
+    });
+
   }
 
   changeValue(id: number, property: string, event: any) {

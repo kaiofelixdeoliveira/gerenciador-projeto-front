@@ -195,14 +195,14 @@
             <td *ngIf="id+1 >= mdbTablePagination.firstItemIndex && id < mdbTablePagination.lastItemIndex">
               <span class="table-remove">
                 <button type="button" mdbBtn color="danger" rounded="true" size="sm" class="my-0"
-                  (click)="remove(id)">Remove</button>
+                  (click)="update(id)">Atualizar</button>
               </span>
             </td>
           </tr>
         </tbody>
         <tfoot class="grey lighten-5 w-100">
           <tr>
-            <td colspan="6">
+            <td colspan="7">
               <mdb-table-pagination [tableEl]="table" [searchDataSource]="listaProjetos"></mdb-table-pagination>
             </td>
           </tr>

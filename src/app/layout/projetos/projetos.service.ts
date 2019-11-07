@@ -33,4 +33,13 @@ export class ProjetosService {
         catchError(this.factoryEndpointService.errorHandler)
       )
   }
+
+  // Update
+  updateProjeto(data,id): Observable<Projeto> {
+    return this.http.put<Projeto>(`${environment.apiUrl}${this.endpointUrl}/${id}`, JSON.stringify(data), this.factoryEndpointService.httpOptions)
+      .pipe(
+        retry(1),
+        catchError(this.factoryEndpointService.errorHandler)
+      )
+  }
 }
